@@ -11,6 +11,6 @@
                maxActive="50" maxIdle="30" maxWait="10000"
                username="dropbox" password="password" 
                driverClassName="com.mysql.jdbc.Driver"
-               url="jdbc:mysql://10.42.0.35:3306/dropbox"/>
+               url="jdbc:mysql://127.0.0.1:3306/dropbox"/>
  
 </Context>
