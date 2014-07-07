@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>You've been linked!</title>
+<script src="jquery-1.11.1.js"></script>
+</head>
+<body>
+
+<p id="downloadLink">Loading Link...</p>
+<script>
+var key;
+var timeLeft;
+var timer;
+$(function(){
+	key = getParameterByName("file");
+	$.get("FileHandler?get_time=true&get_file="+key,function(result){
+		timeLeft = result.time_left;
+		linkToFile = document.createElement("a");
+		linkToFile.href = "FileHandler?get_file=" + key;
+		$("#downloadLink").html("<a href=" + (linkToFile.protocol+"//"+linkToFile.host+linkToFile.pathname+linkToFile.search+linkToFile.hash) + ">Download "+result.filename+" Now!</a>");
+		$("#downloadLink").after("<p id=\"timeLeft\">" + timeFormat() + "</p>");
+		document.title = "You've been linked to " + result.filename + "!";
+		timer = setInterval(function(){
+			timeLeft--;
+			if(timeLeft == 0){
+				$("#timeLeft").html("The link is now deleted");
+				clearTimeout(timer);
+				$("#downloadLink").html("");
+				document.title = "Link Deleted";
+				return;
+			}
+			$("#timeLeft").html(timeFormat());
+		},1000);
+	}).fail(function(){
+		$("#downloadLink").html("Link Not Found");
+	});
+});
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function timeFormat(){
+	var minutes = Math.floor(timeLeft/60);
+	var seconds = timeLeft%60;
+	var output = "Time Left: " + minutes + ":";
+	if(seconds < 10){
+		output += "0";
+	}
+	output += seconds;
+	return output;
+	
+}
+</script>
+
+</body>
+</html>

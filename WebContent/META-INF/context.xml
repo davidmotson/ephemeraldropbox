@@ -1,0 +1,16 @@
+<Context>
+ 
+ 
+ 
+ /*
+ 
+ create statement for this table
+  CREATE TABLE `files` (   `id` INT NOT NULL AUTO_INCREMENT,   `filename` TINYTEXT,   `timestamp` BIGINT,   `data` VARBINARY(1048576),   PRIMARY KEY  (`id`) );
+ */
+  <Resource name="jdbc/dropbox" auth="Container" type="javax.sql.DataSource"
+               maxActive="50" maxIdle="30" maxWait="10000"
+               username="dropbox" password="password" 
+               driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://10.42.0.35:3306/dropbox"/>
+ 
+</Context>
